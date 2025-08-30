@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: glorified-todo-postgres-todo-db
+    environment:
+      POSTGRES_DB: glorified_todo_todo_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - todo_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d glorified_todo_todo_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  todo_db_data:

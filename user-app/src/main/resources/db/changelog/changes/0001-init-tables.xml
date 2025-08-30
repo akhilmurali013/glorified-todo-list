@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd
+      http://www.liquibase.org/xml/ns/dbchangelog-ext
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="0001-create-user-sequence" author="you">
+        <createSequence sequenceName="user_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="0002-create-users-table" author="you">
+        <createTable tableName="users">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="pk_users" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_users_email"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0003-create-user-credentials-table" author="you">
+        <createTable tableName="user_credentials">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="pk_user_credentials" nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_user_credentials_user_name"/>
+            </column>
+            <column name="password_hash" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0004-add-foreign-key-constraint" author="you">
+        <addForeignKeyConstraint
+                baseTableName="user_credentials"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_user_credentials_user"/>
+    </changeSet>
+
+</databaseChangeLog>

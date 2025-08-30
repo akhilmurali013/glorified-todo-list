@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/glorified_todo_user_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      pool-name: app-hikari
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate   # change to 'update' for dev if you want schema auto-management
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: UTC
+
+
+
+  # Useful for debugging; turn off in prod
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    root: INFO
+    liquibase: DEBUG
+    liquibase.changelog: DEBUG
+    liquibase.executor: DEBUG
+    liquibase.database: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
