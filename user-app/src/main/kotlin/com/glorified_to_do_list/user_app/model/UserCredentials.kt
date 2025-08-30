@@ -1,5 +1,6 @@
 package com.glorified_to_do_list.user_app.model
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -22,7 +23,7 @@ data class UserCredentials(
     @Column(name = "password_hash")
     val passwordHash: String,
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @MapsId
     @JoinColumn(name = "user_id")
     val user: User
