@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class TodoController(
     private val todoService: TodoService
 ) {
-    @PostMapping
+    @PostMapping("/create")
     fun createTodo(@RequestBody todo: TodoRequest): ResponseEntity<TodoResponse> {
         return todoService.createTodo(todo).let { ResponseEntity.ok(it) }
     }
