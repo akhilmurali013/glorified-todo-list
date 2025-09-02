@@ -29,6 +29,12 @@ spring:
     init:
       mode: never
 
+jwt:
+  key: ${JWT_KEY:U29tZV9zdXBlcl9zZWNyZXRfa2V5X3dpdGhfMzJfYnl0ZXNfb3JfbW9yZQ==}
+  access-token-expiration: ${JWT_EXPIRATION:3600000}
+  refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:86400000}
+
+
 logging:
   level:
     root: INFO
